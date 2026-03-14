@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Sister 💖</title>
+<style>
+  body {
+    background: #ffe6f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .container {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+
+  /* Envelope */
+  .envelope {
+    width: 200px;
+    height: 120px;
+    background: #ffb6c1;
+    position: relative;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .envelope::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: 0;
+    width: 200px;
+    height: 120px;
+    background: #ff69b4;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transition: top 0.5s;
+  }
+  .envelope.open::before {
+    top: 0;
+  }
+
+  .click-text {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    color: white;
+    pointer-events: none;
+    font-size: 18px;
+  }
+
+  /* Letter inside envelope */
+  .letter {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 2;
+  }
+  .letter.show {
+    opacity: 1;
+  }
+
+  /* Hearts container */
+  .hearts {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .heart {
+    width: 20px;
+    height: 20px;
+    background: red;
+    clip-path: polygon(50% 0%, 61% 15%, 75% 15%, 85% 25%, 85% 40%, 75% 55%, 50% 75%, 25% 55%, 15% 40%, 15% 25%, 25% 15%, 39% 15%);
+    position: absolute;
+    opacity: 0;
+    transform-origin: center;
+  }
+
+  .sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: yellow;
+    border-radius: 50%;
+    opacity: 0.8;
+    box-shadow: 0 0 8px yellow;
+    animation: sparkle-float 1s linear infinite;
+  }
+  @keyframes sparkle-float {
+    0% { transform: translate(0,0) scale(1); opacity: 1; }
+    50% { transform: translate(5px,-5px) scale(1.5); opacity: 0.7; }
+    100% { transform: translate(-5px,-10px) scale(1); opacity: 0; }
+  }
+
+  /* Bear waving */
+  .bear {
+    position: absolute;
+    right: -120px;
+    top: 0;
+    width: 100px;
+    height: 120px;
+    background: url('https://i.ibb.co/N2Gf7Pm/cute-bear-heart.png') no-repeat center;
+    background-size: contain;
+    animation: bear-wave 1.5s infinite alternate;
+    z-index: 2;
+  }
+  @keyframes bear-wave {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+    100% { transform: translateY(0) rotate(-5deg); }
+  }
+
+  /* Background hearts */
+  .bg-heart {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    background: pink;
+    clip-path: polygon(50% 0%, 61% 15%, 75% 15%, 85% 25%, 85% 40%, 75% 55%, 50% 75%, 25% 55%, 15% 40%, 15% 25%, 25% 15%, 39% 15%);
+    opacity: 0.6;
+    animation: float-bg 10s linear infinite;
+  }
+  @keyframes float-bg {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50% { opacity: 0.3; }
+    100% { transform: translateY(-1000px) rotate(360deg); opacity: 0; }
+  }
+
+  /* Floating text */
+  .floating-text {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    color: #ff69b4;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px #fff;
+    opacity: 0;
+    animation: float-text 2s ease forwards;
+    z-index: 2;
+  }
+  @keyframes float-text {
+    0% { transform: translate(-50%,0); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translate(-50%, -50px); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating background hearts -->
+<script>
+  for (let i = 0; i < 30; i++) {
+    const bgHeart = document.createElement('div');
+    bgHeart.classList.add('bg-heart');
+    bgHeart.style.left = Math.random() * window.innerWidth + 'px';
+    bgHeart.style.top = Math.random() * window.innerHeight + 'px';
+    bgHeart.style.width = (10 + Math.random()*20) + 'px';
+    bgHeart.style.height = bgHeart.style.width;
+    bgHeart.style.animationDuration = (5 + Math.random()*10) + 's';
+    document.body.appendChild(bgHeart);
+  }
+</script>
+
+<div class="container">
+  <div class="envelope" id="envelope">
+    <div class="click-text">Click Here 💌</div>
+    <div class="hearts" id="hearts"></div>
+  </div>
+  <div class="letter" id="letter">
+    <h3>Dear Sister,</h3>
+    <p>You are the sweetest and most amazing sister ever! 💖</p>
+    <p>Sending you all my love and hugs. 😘</p>
+  </div>
+  <div class="bear"></div>
+</div>
+
+<script>
+  const envelope = document.getElementById('envelope');
+  const letter = document.getElementById('letter');
+  const heartsContainer = document.getElementById('hearts');
+
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    const size = 10 + Math.random() * 20;
+    heart.style.width = size + 'px';
+    heart.style.height = size + 'px';
+    heart.style.left = Math.random() * 180 + 'px';
+    heartsContainer.appendChild(heart);
+
+    // Add sparkle inside heart
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle');
+    heart.appendChild(sparkle);
+
+    // Random directions
+    const angle = Math.random() * 2 * Math.PI;
+    const speed = 1 + Math.random() * 2;
+    let y = 0, x = 0;
+    const rotation = Math.random() * 360;
+    const rotateSpeed = (Math.random() - 0.5) * 10;
+
+    const floatHeart = setInterval(() => {
+      y += speed * Math.cos(angle);
+      x += speed * Math.sin(angle);
+      heart.style.top = -y + 'px';
+      heart.style.left = 90 + x + 'px';
+      heart.style.opacity = 1 - y / 150;
+      heart.style.transform = `rotate(${rotation + rotateSpeed * y}deg)`;
+
+      if (y > 150) {
+        heart.remove();
+        clearInterval(floatHeart);
+      }
+    }, 20);
+  }
+
+  envelope.addEventListener('click', () => {
+    envelope.classList.add('open');
+    letter.classList.add('show');
+
+    // Burst of hearts from envelope
+    setInterval(() => {
+      for (let i = 0; i < 3; i++) createHeart();
+    }, 400);
+
+    // Floating text
+    setInterval(() => {
+      const text = document.createElement('div');
+      text.classList.add('floating-text');
+      text.textContent = 'I love you, my pretty Sister💕';
+      document.body.appendChild(text);
+      setTimeout(() => text.remove(), 2000);
+    }, 2000);
+  });
+</script>
+</body>
+</html>
